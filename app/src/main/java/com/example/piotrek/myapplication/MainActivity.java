@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Log.d("TEST", "TEST9");
         text1 = (TextView) findViewById(android.R.id.text1);
         text2 = (TextView) findViewById(android.R.id.text2);
         text3 = (TextView) findViewById(R.id.text3);
@@ -45,26 +45,29 @@ public class MainActivity extends Activity {
 
         authToken = null;
         mAuthPreferences = new AuthPreferences(this);
+        Log.d("TEST", "TEST17");
         mAccountManager = AccountManager.get(this);
-
+        Log.d("TEST", "TEST10");
         mAccountManager.getAuthTokenByFeatures(AccountUtils.ACCOUNT_TYPE, AccountUtils.AUTH_TOKEN_TYPE, null, this, null, null, new GetAuthTokenCallback(), null);
+        Log.d("TEST", "TEST11");
     }
 
     private class GetAuthTokenCallback implements AccountManagerCallback<Bundle> {
         @Override
         public void run(AccountManagerFuture<Bundle> result) {
             Bundle bundle;
-
+            Log.d("TEST", "TEST12");
             try {
                 bundle = result.getResult();
 
                 final Intent intent = (Intent) bundle.get(AccountManager.KEY_INTENT);
                 if (null != intent) {
                     startActivityForResult(intent, REQ_SIGNUP);
+                    Log.d("TEST", "TEST5");
                 } else {
                     authToken = bundle.getString(AccountManager.KEY_AUTHTOKEN);
                     final String accountName = bundle.getString(AccountManager.KEY_ACCOUNT_NAME);
-
+                    Log.d("TEST", "TEST8");
                     // Save session username & auth token
                     mAuthPreferences.setAuthToken(authToken);
                     mAuthPreferences.setUsername(accountName);
@@ -76,10 +79,12 @@ public class MainActivity extends Activity {
                     text5.setText("Test");
                     text6.setText("Email: " + bundle.getString("email"));
                     text7.setText("Status: " + AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE);
-
+                    Log.d("TEST", "TEST6");
                     // If the logged account didn't exist, we need to create it on the device
                     Account account = AccountUtils.getAccount(MainActivity.this, accountName);
+                    Log.d("TEST", "TEST18");
                     if (null == account) {
+                        Log.d("TEST", "TEST7");
                         account = new Account(accountName, AccountUtils.ACCOUNT_TYPE);
                         Log.d("WBIJASZ DO IF'a?", "TAK");
                         mAccountManager.addAccountExplicitly(account, bundle.getString(LoginActivity.PARAM_USER_PASSWORD), null);

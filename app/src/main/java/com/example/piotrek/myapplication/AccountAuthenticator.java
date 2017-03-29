@@ -8,6 +8,7 @@ import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 /**
  * Created by Piotrek on 29.03.2017.
@@ -32,11 +33,12 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
             throws NetworkErrorException
     {
         Bundle reply = new Bundle();
-
+        Log.d("TEST", "TEST333");
         Intent intent = new Intent(mContext, LoginActivity.class);
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
         intent.putExtra(LoginActivity.ARG_ACCOUNT_TYPE, accountType);
         intent.putExtra(LoginActivity.ARG_AUTH_TOKEN_TYPE, authTokenType);
+        Log.d("TEST", "TEST222");
         intent.putExtra(LoginActivity.ARG_IS_ADDING_NEW_ACCOUNT, true);
 
         // return our AccountAuthenticatorActivity

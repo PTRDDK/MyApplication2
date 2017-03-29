@@ -331,12 +331,15 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Loade
         protected Intent doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
+            Log.d("TEST", "TEST1");
+
             String authToken = AccountUtils.mServerAuthenticator.signIn(mEmail, mPassword);
 
             final Intent res = new Intent();
 
             res.putExtra(AccountManager.KEY_ACCOUNT_NAME, mEmail);
             res.putExtra(AccountManager.KEY_ACCOUNT_TYPE, AccountUtils.ACCOUNT_TYPE);
+            Log.d("TEST", "TEST2");
             res.putExtra(AccountManager.KEY_AUTHTOKEN, authToken);
             res.putExtra(PARAM_USER_PASSWORD, mPassword);
 
@@ -365,13 +368,16 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Loade
         protected void onPostExecute(final Intent intent) {
             mAuthTask = null;
             showProgress(false);
+            Log.d("TEST", "TEST16");
             Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
 
             if (null == intent.getStringExtra(AccountManager.KEY_AUTHTOKEN)) {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
+                Log.d("TEST", "TEST3");
                 mPasswordView.requestFocus();
             } else {
                 finishLogin(intent);
+                Log.d("TEST", "TEST13");
                 startActivity(myIntent);
             }
         }
@@ -381,18 +387,21 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Loade
             final String accountPassword = intent.getStringExtra(PARAM_USER_PASSWORD);
             final Account account = new Account(accountName, intent.getStringExtra(AccountManager.KEY_ACCOUNT_TYPE));
             String authToken = intent.getStringExtra(AccountManager.KEY_AUTHTOKEN);
-
+            Log.d("TEST", "TEST14");
             if (getIntent().getBooleanExtra(ARG_IS_ADDING_NEW_ACCOUNT, false)) {
                 // Creating the account on the device and setting the auth token we got
                 // (Not setting the auth token will cause another call to the server to authenticate the user)
                 Log.d("WBIJASZ DO IF'a?", "TAK");
+                Log.d("TEST", "TEST4");
                 mAccountManager.addAccountExplicitly(account, accountPassword, null);
                 mAccountManager.setAuthToken(account, AccountUtils.AUTH_TOKEN_TYPE, authToken);
             } else {
                 mAccountManager.setPassword(account, accountPassword);
+                Log.d("TEST", "TEST19");
             }
 
             setAccountAuthenticatorResult(intent.getExtras());
+            Log.d("TEST", "TEST15");
             setResult(AccountAuthenticatorActivity.RESULT_OK, intent);
 
             finish();
